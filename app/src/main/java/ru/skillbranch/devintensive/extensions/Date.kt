@@ -11,7 +11,6 @@ const val HOUR = 60 * MINUTE
 const val DAY = 24 * HOUR
 
 
-
 fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
     val dataFormat = SimpleDateFormat(pattern, Locale("ru"))
     return dataFormat.format(this)
@@ -30,7 +29,7 @@ fun Date.add(value: Int, units: TimeUnits): Date {
     return this
 }
 
-fun Date.humanizeDiff(date: Date = Date() ): String {
+fun Date.humanizeDiff(date: Date = Date()): String {
     var time = ""
     val interval = Date().time - this.time
 
@@ -76,6 +75,31 @@ enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY;
+
+    fun plural(value: Int): String =
+        when (this) {
+            SECOND -> when (value % 10) {
+                1 -> "$value секунду"
+                2, 3, 4 -> "$value секунды"
+                else -> "$value секунд"
+            }
+            MINUTE->when (value % 10) {
+                1 -> "$value минуту"
+                2, 3, 4 -> "$value минуты"
+                else -> "$value минут"
+            }
+            HOUR->when (value % 10) {
+                1 -> "$value час"
+                2, 3, 4 -> "$value часа"
+                else -> "$value часов"
+            }
+            DAY->when (value % 10) {
+                1 -> "$value день"
+                2, 3, 4 -> "$value дня"
+                else -> "$value дней"
+            }
+        }
+
 }
 
