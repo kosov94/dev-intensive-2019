@@ -39,29 +39,17 @@ fun Date.humanizeDiff(date: Date = Date()): String {
         in 45 * SECOND..75 * SECOND -> time = "минуту"
         in 75 * SECOND..45 * MINUTE -> {
             val minute: Int = (abs(interval) / MINUTE).toInt()
-            time = when (minute % 10) {
-                1 -> "$minute минуту"
-                2, 3, 4 -> "$minute минуты"
-                else -> "$minute минут"
-            }
+            time = TimeUnits.MINUTE.plural(minute)
         }
         in 45 * MINUTE..75 * MINUTE -> time = "час"
         in 75 * MINUTE..22 * HOUR -> {
             val hour: Int = (abs(interval) / HOUR).toInt()
-            time = when (hour % 10) {
-                1 -> "$hour час"
-                2, 3, 4 -> "$hour часа"
-                else -> "$hour часов"
-            }
+            time = TimeUnits.HOUR.plural(hour)
         }
         in 22 * HOUR..26 * HOUR -> time = "день"
         in 26 * HOUR..360 * DAY -> {
             val day: Int = (abs(interval) / DAY).toInt()
-            time = when (day % 10) {
-                1 -> "$day день"
-                2, 3, 4 -> "$day дня"
-                else -> "$day дней"
-            }
+            time = TimeUnits.DAY.plural(day)
         }
         else -> {
             if (interval > 0) return "более года назад" else return "более чем через год"
@@ -84,17 +72,17 @@ enum class TimeUnits {
                 2, 3, 4 -> "$value секунды"
                 else -> "$value секунд"
             }
-            MINUTE->when (value % 10) {
+            MINUTE -> when (value % 10) {
                 1 -> "$value минуту"
                 2, 3, 4 -> "$value минуты"
                 else -> "$value минут"
             }
-            HOUR->when (value % 10) {
+            HOUR -> when (value % 10) {
                 1 -> "$value час"
                 2, 3, 4 -> "$value часа"
                 else -> "$value часов"
             }
-            DAY->when (value % 10) {
+            DAY -> when (value % 10) {
                 1 -> "$value день"
                 2, 3, 4 -> "$value дня"
                 else -> "$value дней"
