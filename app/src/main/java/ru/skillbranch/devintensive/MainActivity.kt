@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val status = savedInstanceState?.getString("STATUS") ?: Bender.Status.NORMAL.name
         val question = savedInstanceState?.getString("QUESTION") ?: Bender.Question.NAME.name
+        val text = savedInstanceState?.getString("TEXT")
 
         benderObj = Bender(
             status = Bender.Status.valueOf(status),
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         benderImage.setColorFilter(Color.rgb(r,g,b), PorterDuff.Mode.MULTIPLY)
 
         textTxt.text = benderObj.askQuestion()
+        et_message.setText(text)
 
         sendBtn.setOnClickListener(this)
     }
@@ -83,6 +85,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         outState?.putString("STATUS", benderObj.status.name)
         outState?.putString("QUESTION", benderObj.question.name)
+        outState?.putString("TEXT", et_message.text.toString())
 
         Log.d("M_MainActivity", "${benderObj.status.name} ${benderObj.question.name}")
     }
