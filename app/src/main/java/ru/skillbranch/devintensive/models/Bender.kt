@@ -16,8 +16,14 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             question = question.nextQuestion()
             "Отлично - ты справился\n${question.question}" to status.color
         } else {
+            if(status.name != "CRITICAL"){
             status = status.nextStatus()
-            "Это не правильный ответ!\n${question.question}" to status.color
+            "Это не правильный ответ!\n${question.question}" to status.color}
+            else{
+                status = Status.NORMAL
+                question = Question.NAME
+                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+            }
 
         }
 
@@ -38,7 +44,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     enum class Question(val question: String, val answers: List<String>) {
-        NAME("Как меня зовут?", listOf("бендер", "bender")) {
+        NAME("Как меня зовут?", listOf("Бендер", "bender")) {
             override fun nextQuestion(): Question = PROFESSION
 
         },
